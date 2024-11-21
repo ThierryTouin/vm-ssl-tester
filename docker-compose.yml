@@ -17,8 +17,7 @@ services:
       - ./certs/app1.dev.local:/etc/nginx/ssl  # Montage des certificats
     depends_on:
       - gencert
-    networks:
-      - devnet
+
 
   ## generate automatically selsigned certificate
   gencert: 
@@ -33,7 +32,3 @@ services:
     volumes:
       - ./certs:/certs
 
-
-networks:
-  devnet:
-    external: true

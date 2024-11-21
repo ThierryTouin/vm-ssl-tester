@@ -1,0 +1,39 @@
+version: "3"
+name: "vm-ssl-tester"
+services:
+  app1:
+    hostname: app1.dev.local
+    container_name: vm-ssl-tester-app1
+    build:
+      context: ./front-end
+      dockerfile: ./app1.Dockerfile
+      args: 
+        - TITLE=react-app
+    ports:
+      - 80:80
+      - 443:443  # HTTPS
+    volumes:
+      - ./front-end/react-app:/app/react-app
+      - ./certs/app1.dev.local:/etc/nginx/ssl  # Montage des certificats
+    depends_on:
+      - gencert
+    networks:
+      - devnet
+
+  ## generate automatically selsigned certificate
+  gencert: 
+    container_name: vm-ssl-tester-gencert
+    build:
+      context: ./certs
+      dockerfile: ./openssl.Dockerfile
+    command: >
+      sh -c "
+      openssl req -x509 -newkey rsa:4096 -keyout /certs/app1.dev.local/app1.dev.local.key -out /certs/app1.dev.local/app1.dev.local.crt -days 365 -nodes -subj /CN=customerportal.inetum.services &&
+      ls -al /certs/"
+    volumes:
+      - ./certs:/certs
+
+
+networks:
+  devnet:
+    external: true

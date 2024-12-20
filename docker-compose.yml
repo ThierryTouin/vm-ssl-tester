@@ -27,7 +27,7 @@ services:
       dockerfile: ./openssl.Dockerfile
     command: >
       sh -c "
-      openssl req -x509 -newkey rsa:4096 -keyout /certs/app1.dev.local/app1.dev.local.key -out /certs/app1.dev.local/app1.dev.local.crt -days 365 -nodes -subj /CN=customerportal.inetum.services &&
+      openssl req -x509 -newkey rsa:4096 -keyout /certs/app1.dev.local/app1.dev.local.key -out /certs/app1.dev.local/app1.dev.local.crt -days 365 -nodes -subj /CN=app1.dev.local &&
       ls -al /certs/"
     volumes:
       - ./certs:/certs

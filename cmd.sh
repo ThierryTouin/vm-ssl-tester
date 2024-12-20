@@ -9,6 +9,7 @@ function display_help {
   echo "front Commands:"
   echo "  cmd up          Start the application"
   echo "  cmd shell       Enter in container"
+  echo "  cmd shellr      Enter in container with root user"
   echo "  cmd clean.......Clean the application"
   echo
   exit 1
@@ -16,7 +17,9 @@ function display_help {
 
 if [ $# -gt 0 ]; then
   if [ "$1" == "shell" ]; then
-    docker container exec -it mock-server /bin/sh
+    docker container exec -it vm-ssl-tester-app1 /bin/sh
+  if [ "$1" == "shellr" ]; then
+    docker container exec -it --user root vm-ssl-tester-app1 /bin/sh
   elif [ "$1" == "clean" ]; then
     docker compose down --volumes --rmi all
   elif [ "$1" == "help" ] || [ "$1" == "--help" ] || [ "$1" == "-h" ]; then

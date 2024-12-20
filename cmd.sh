@@ -18,7 +18,7 @@ function display_help {
 if [ $# -gt 0 ]; then
   if [ "$1" == "shell" ]; then
     docker container exec -it vm-ssl-tester-app1 /bin/sh
-  if [ "$1" == "shellr" ]; then
+  elif [ "$1" == "shellr" ]; then
     docker container exec -it --user root vm-ssl-tester-app1 /bin/sh
   elif [ "$1" == "clean" ]; then
     docker compose down --volumes --rmi all

@@ -4,7 +4,13 @@ FROM node:22-alpine as build
 ARG TITLE 
 
 # Ajouter l'entrée au fichier /etc/hosts
-RUN echo "172.19.192.33 nexus.codep.inetum.world" >> /etc/hosts
+#RUN echo "172.19.192.33 nexus.codep.inetum.world" >> /etc/hosts
+# Copier votre fichier personnalisé dans l'image
+COPY custom_hosts /tmp/custom_hosts
+# Ajouter les entrées de /tmp/custom_hosts dans /etc/hosts
+RUN cat /tmp/custom_hosts >> /etc/hosts
+
+
 
 WORKDIR /app
 COPY ./react-app/package*.json ./

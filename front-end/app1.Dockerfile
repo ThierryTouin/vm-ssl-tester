@@ -3,6 +3,9 @@ FROM node:22-alpine as build
 
 ARG TITLE 
 
+# Ajouter l'entrée au fichier /etc/hosts
+RUN echo "172.19.192.33 nexus.codep.inetum.world" >> /etc/hosts
+
 WORKDIR /app
 COPY ./react-app/package*.json ./
 RUN npm install
